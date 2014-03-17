@@ -1,0 +1,21 @@
+Config { 
+       font = "xft:WenQuanYi Micro Hei:bold:size=9:antialias=True"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = BottomW L 90
+       , lowerOnStart = True
+       , commands = [ Run Battery [] 60 
+		    , Run DiskIO [("/", "R:<read> W:<write>")] [] 5
+                    , Run Network "eth0" ["-t","<dev>:<rx>","-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Network "wlan0" ["-t","<dev>:<rx>","-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem:<usedratio>%"] 10
+    		    , Run Com "kanjioftheday" [] "kanji" 60
+    		    , Run Com "timeinparis" [] "parisdate" 10
+    		    , Run Date "%b %_d %H:%M:%S" "date" 10
+                    , Run StdinReader
+		    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader%}{%diskio%|%cpu%|%memory%|%eth0%||<fc=#ee9a00>%parisdate%</fc>|%kanji%|<fc=#ee9a00>%date%</fc>"
+       }
