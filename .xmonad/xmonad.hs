@@ -15,7 +15,21 @@
 -- http://www.haskell.org/haskellwiki/Xmonad/Notable_changes_since_0.8
 --
  
-import XMonad
+import XMonad hiding (Tall)
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Util.Run
+import XMonad.Util.EZConfig
+import XMonad.Util.Scratchpad
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Tabbed
+import XMonad.Layout.HintedTile
+import System.IO
+import Data.List
 import Data.Monoid
 import System.Exit
  
@@ -30,10 +44,6 @@ myTerminal      = "urxvt"
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
- 
--- Width of the window border in pixels.
---
-myBorderWidth   = 1
  
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -74,13 +84,57 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1:term","2:web","3:mail","4:im","5:pdf","6:irc","7:random","8:logs","9:wine","NSP"]
  
+myFont = "-dejavu-dejavu sans mono-medium-r-normal-*-10-*-*-*-*-*-*"
+-- Width of the window border in pixels.
+--
+myBorderWidth   = 1
+
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#dddddd"
+myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#ff0000"
- 
+
+myNormalFGColor = "#ffffff"
+myNormalBGColor = "#000000"
+
+myActiveTextColor = "#00ff00"
+
+myUrgentTextColor = "#000000"
+myUrgentBGColor = "#ff0000"
+
+-- tabbed layout theme
+myTabTheme = defaultTheme {
+	activeColor = myNormalBGColor
+	, inactiveColor = myNormalBGColor
+	, urgentColor = myUrgentBGColor
+	, activeBorderColor = myNormalFGColor
+	, inactiveBorderColor = myNormalFGColor
+	, urgentBorderColor = myUrgentTextColor
+	, activeTextColor = myActiveTextColor
+	, inactiveTextColor = myNormalFGColor
+	, urgentTextColor = myUrgentTextColor
+	, fontName = myFont
+	}
+-- Applications
+
+myDmenuLaunch = "dmenu_run -nb black -nf white -sb gray -sf white -fn '-misc-fixed-medium-r-*-*-15-*-*-*-*-*-*-*'"
+myTrayer = "pgrep trayer || trayer --SetDockType true --SetPartialStrut true --edge bottom --widthtype pixel --width 100 --height 18 --expand false --align right --tint 0x000000 --transparent true"
+myXmobarLaunch = "xmobar"
+myScratchTerminal = "urxvt"
+
+------------------------------------------------------------------------
+-- ScratchPad config
+-- W.RationalRect l t w h
+-- h : terminal height
+-- w : terminal width
+-- t : distance from top edge
+-- l : distance from left edge
+myManageScratchPad :: ManageHook
+myManageScratchPad = scratchpadManageHook (W.RationalRect 0.5 0 0.5 0.4)
+
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -90,10 +144,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
  
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
- 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modm,               xK_x     ), spawn myDmenuLaunch)
  
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -213,20 +264,20 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout =
+	onWorkspace "1:term" ( avoidStruts (term ||| hterm ||| mytab) ) $
+	onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( avoidStruts (mytab) ) $
+	avoidStruts (term ||| Full ||| mytab ) ||| Full 
   where
-    -- default tiling algorithm partitions the screen into two panes
-    tiled   = Tall nmaster delta ratio
- 
-    -- The default number of windows in the master pane
-    nmaster = 1
- 
-    -- Default proportion of screen occupied by master pane
-    ratio   = 1/2
- 
-    -- Percent of screen to increment by when resizing panes
-    delta   = 3/100
- 
+     -- default tiling algorithm partitions the screen into two panes
+     hterm  = Mirror term
+     term   = HintedTile master delta inc TopLeft Tall
+     master = 1
+     delta  = 3/100
+     inc    = 1/2
+     mytab  = tabbed shrinkText myTabTheme
+
+
 ------------------------------------------------------------------------
 -- Window rules:
  
@@ -242,11 +293,38 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
-myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+myManageHook = ( composeAll . concat $
+    [ [ className =? "MPlayer"        --> doFloat        ]
+    , [ className =? "Gimp"           --> doFloat        ]
+    --, [ resource  =? "desktop_window" --> doIgnore       ]
+    --, [ resource  =? "kdesktop"       --> doIgnore       ]
+    , [ appName =? "web-edit"         --> doShift "2:web"]
+    , [ fmap ( c `isInfixOf`) title --> doShift "3:mail" | c <- myMatchMailT ]
+    , [ fmap ( c `isInfixOf`) title --> doShift "6:irc" | c <- myMatchIRCT ]
+    , [ fmap ( c `isInfixOf`) className --> doShift "1:term" | c <- myMatchTermC ]
+    , [ fmap ( c `isInfixOf`) className --> doShift "2:web" | c <- myMatchWebC ]
+    , [ fmap ( c `isInfixOf`) className --> doShift "4:im" | c <- myMatchIMC ]
+    , [ fmap ( c `isInfixOf`) title --> doShift "4:im" | c <- myMatchIMT ]
+    , [ fmap ( c `isInfixOf`) className --> doShift "5:pdf" | c <- myMatchPDFC ]
+    , [ fmap ( c `isInfixOf`) className --> doShift "9:wine" | c <- myMatchWineC ]
+    -- make new windows slaves
+    , [ doF avoidMaster ]
+    ]) <+> manageDocks <+> myManageScratchPad 
+    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji" ]
+          myMatchTermC = [ "Terminator", "terminator", "urxvt", "URxvt", "xterm", "gnome-terminal" ]
+          myMatchIMC = [ "Pidgin", "pidgin" , "irssi" ]
+          myMatchIMT = [ "Pidgin", "pidgin" , "irssi" ]
+	  myMatchMailT = [ "mutt" ]
+	  myMatchIRCT = [ "irc" ]
+	  myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura" ]
+	  myMatchWineC = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
+		
+
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+     W.Stack t [] (r:rs) ->  W.Stack t [r] rs
+     otherwise           -> c
+
  
 ------------------------------------------------------------------------
 -- Event handling
@@ -274,7 +352,25 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook = return ()
+wstitle :: String -> String
+wstitle x = case x of
+			"Mirror Tall"		-> "[-]"
+			"Tall" 			-> "[|]"
+			"Tabbed Simplest"   	-> "^^^"
+		 	_			-> pad x
+
+
+noScratchPad ws = if ws == "NSP" then "" else ws
+
+myXmobarPP h = xmobarPP {
+	ppOutput	= hPutStrLn h
+	, ppTitle	= shorten 30
+	, ppLayout	= xmobarColor "white" "black" . wstitle
+	, ppUrgent	= xmobarColor "red" "black"
+	, ppHidden	= noScratchPad
+}
+
+myLogHook h = dynamicLogWithPP $ myXmobarPP h  
  
 ------------------------------------------------------------------------
 -- Startup hook
@@ -290,22 +386,17 @@ myLogHook = return ()
 -- It will add initialization of EWMH support to your custom startup
 -- hook by combining it with ewmhDesktopsStartup.
 --
-myStartupHook = return ()
+myStartupHook = do
+	spawn myTrayer
  
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
  
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
- 
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
+main = do
+	myXmobarProc <- spawnPipe myXmobarLaunch
+	xmonad $ defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -325,6 +416,6 @@ defaults = defaultConfig {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = myLogHook $ myXmobarProc,
         startupHook        = myStartupHook
     }
