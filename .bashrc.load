@@ -6,3 +6,5 @@ export PATH=$PATH:$HOME/bin
 
 ####
 # put any bash customizations in here
+ .  /usr/share/autojump/autojump.sh
+ . .bashprompt
