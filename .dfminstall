@@ -3,3 +3,4 @@ README.md skip
 .vim/undo skip
 .vim/bundle skip
 .xmonad recurse
+.mutt recurse
