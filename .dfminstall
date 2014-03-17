@@ -1,4 +1,5 @@
 README.md skip
 .ssh recurse
 .vim/undo skip
+.vim/bundle skip
 .xmonad recurse
