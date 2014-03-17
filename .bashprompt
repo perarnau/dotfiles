@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# bash_prompt
+
+# Color ref:
+# http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+# More tips:
+# http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+
+
+# Check that terminfo exists before changing TERM var to xterm-256color
+# Prevents prompt flashing in Mac OS X 10.6 Terminal.app
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+	export TERM='xterm-256color'
+fi
+
+tput sgr 0 0
+
+# Base styles and color palette
+# Solarized colors
+# https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+SOLAR_VIOLET=$(tput setaf 13)
+SOLAR_ORANGE=$(tput setaf 9)
+SOLAR_CYAN=$(tput setaf 6)
+SOLAR_WHITE=$(tput setaf 15)
+SOLAR_YELLOW=$(tput setaf 3)
+SOLAR_RED=$(tput setaf 2)
+
+style_user="\[${RESET}${SOLAR_VIOLET}\]"
+style_host="\[${RESET}${SOLAR_ORANGE}\]"
+style_path="\[${RESET}${SOLAR_CYAN}\]"
+style_chars="\[${RESET}${SOLAR_WHITE}\]"
+style_time="\[${SOLAR_YELLOW}\]"
+
+if [[ "$SSH_TTY" ]]; then
+	# connected via ssh
+	style_host="\[${BOLD}${SOLAR_RED}\]"
+elif [[ "$USER" == "root" ]]; then
+	# logged in as root
+	style_user="\[${BOLD}${SOLAR_RED}\]"
+fi
+
+# Set the terminal title to the current work dir
+PS1="\[\033]0;\w\007\]"
+# Build the prompt
+PS1+="${style_user}\u" # Username
+PS1+="${style_chars}@" # @
+PS1+="${style_host}\h" # Host
+PS1+="${style_chars}: " # :
+PS1+="${style_path}\w" # Working directory
+PS1+="${style_chars}: [" # time
+PS1+="${style_time}\t" # time
+PS1+="${style_chars}]\$ \[${RESET}\]" # $ (and reset color)
