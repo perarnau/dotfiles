@@ -1,0 +1,74 @@
+set mbox_type=Maildir
+set folder=~/Maildir
+
+source ~/.muttrc.mailboxes
+source ~/.muttrc.lists
+source ~/.mutt/solarized.muttrc
+
+folder-hook Imag set from="swann.perarnau@imag.fr"
+folder-hook Imag set postponed=~/Maildir/Imag/Drafts
+folder-hook Imag set record=~/Maildir/Imag/Sent
+folder-hook Imag set signature=~/.signature.imag
+
+folder-hook Riken set from="perarnau@riken.jp"
+folder-hook Riken set postponed=~/Maildir/Riken/Drafts
+folder-hook Riken set record=~/Maildir/Riken/Sent
+folder-hook Riken set signature=~/.signature.riken
+
+folder-hook Gmail set from="swann.perarnau@gmail.com"
+folder-hook Gmail set postponed=~/Maildir/Gmail/Drafts
+folder-hook Gmail set record=~/Maildir/Gmail/Sent
+folder-hook Gmail set signature=~/.signature.gmail
+
+set copy=yes
+set fcc_attach=yes
+set sort=threads
+set sort_aux = 'last-date-received'
+
+set spoolfile="~/Maildir/Riken/INBOX"
+set header_cache=~/.mutt/.hcache/
+
+set check_new=yes
+set mail_check=60
+
+set editor=vim
+set edit_headers=yes
+set include
+
+set implicit_autoview=yes
+
+macro index \cb "<pipe-entry> urlview<Enter>"
+auto_view application/x-gunzip
+auto_view application/x-gzip
+auto_view text/html
+
+set envelope_from=yes
+set sendmail="/usr/bin/msmtp"
+
+set charset="utf-8"
+set send_charset="utf-8"
+
+set folder_format="%N %-25f %d"
+
+set rfc2047_parameters=yes
+
+# perf
+set read_inc=1000
+set write_inc=1000
+
+# for urgency hint in mutt terminal
+set beep_new=yes
+
+# abook
+set query_command = "abook --mutt-query '%s'"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+
+# Mu
+# first macro does the search according to user query, second macro jumps to result list
+macro index <F8> "<shell-escape>rm -rf ~/.mu/results; mu find -o links --linksdir ~/.mu/results " "mu-find"
+macro index <F9> "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
+
+# top-post style
+macro index ,t ":set sig_on_top;<Return>" "set top-post reply"
+macro index ,b ":unset sig_on_top;<Return>" "set bottom-post reply"
