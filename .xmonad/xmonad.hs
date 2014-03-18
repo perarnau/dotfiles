@@ -147,6 +147,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_x     ), spawn myDmenuLaunch)
  
     -- close focused window
+    , ((modm .|. shiftMask, xK_x     ), spawn "xscreensaver-command -lock")
+
+    -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
  
      -- Rotate through the available layout algorithms
