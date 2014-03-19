@@ -1,5 +1,5 @@
 Config { 
-       font = "xft:WenQuanYi Micro Hei:bold:size=9:antialias=True"
+       font = "xft:WenQuanYi Micro Hei:bold:size=10:antialias=True"
        , bgColor = "black"
        , fgColor = "grey"
        , position = BottomW L 90

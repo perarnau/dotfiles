@@ -313,7 +313,7 @@ myManageHook = ( composeAll . concat $
     -- make new windows slaves
     , [ doF avoidMaster ]
     ]) <+> manageDocks <+> myManageScratchPad 
-    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji" ]
+    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome" ]
           myMatchTermC = [ "Terminator", "terminator", "urxvt", "URxvt", "xterm", "gnome-terminal" ]
           myMatchIMC = [ "Pidgin", "pidgin" , "irssi" ]
           myMatchIMT = [ "Pidgin", "pidgin" , "irssi" ]
@@ -399,7 +399,7 @@ myStartupHook = do
 --
 main = do
 	myXmobarProc <- spawnPipe myXmobarLaunch
-	xmonad $ defaultConfig {
+	xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
