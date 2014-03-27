@@ -2,5 +2,6 @@ README.md skip
 .ssh recurse
 .vim/undo skip
 .vim/bundle skip
+.vim/.netrwhist skip
 .xmonad recurse
 .mutt recurse
