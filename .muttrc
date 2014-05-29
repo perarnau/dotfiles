@@ -5,6 +5,7 @@ source ~/.muttrc.mailboxes
 source ~/.muttrc.lists
 source ~/.mutt/solarized.muttrc
 
+set realname="Swann Perarnau"
 folder-hook Imag set from="swann.perarnau@imag.fr"
 folder-hook Imag set postponed=~/Maildir/Imag/Drafts
 folder-hook Imag set record=~/Maildir/Imag/Sent
