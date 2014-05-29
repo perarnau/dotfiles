@@ -113,6 +113,10 @@ highlight ExtraWhitespace ctermbg=red
 map <C-G> :match ExtraWhitespace /^\s \s*\<Bar>\s\+$/<CR>
 imap <C-G> :match ExtraWhitespace /^\s \s*\<Bar>\s\+$/<CR>
 
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
 "save undo across runs
 set undofile
 set undodir=~/.vim/undo
