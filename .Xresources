@@ -26,9 +26,10 @@ xterm*color15:     #EEEEEC
 !!urxvt config
 URxvt.background: #002b36
 URxvt.foreground: #839496
-URxvt.font: xft:DejaVu Sans Mono:size=10:antialias=True, xft:WenQuanYi Micro Hei:size=9:antialias=True
+URxvt.font: xft:DejaVu Sans Mono:size=10:antialias=True, xft:WenQuanYi Micro Hei:size=10:antialias=True
 URxvt.scrollBar: False
 URxvt*urgentOnBell: true
+URxvt*buffered: false
 
 !!Source http://github.com/altercation/solarized
  
