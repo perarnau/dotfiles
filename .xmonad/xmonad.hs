@@ -201,7 +201,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
  
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
@@ -313,7 +313,7 @@ myManageHook = ( composeAll . concat $
     -- make new windows slaves
     , [ doF avoidMaster ]
     ]) <+> manageDocks <+> myManageScratchPad 
-    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome" ]
+    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome", "Chromium" ]
           myMatchTermC = [ "Terminator", "terminator", "urxvt", "URxvt", "xterm", "gnome-terminal" ]
           myMatchIMC = [ "Pidgin", "pidgin" , "irssi" ]
           myMatchIMT = [ "Pidgin", "pidgin" , "irssi", "viber", "Viber" ]
