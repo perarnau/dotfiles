@@ -1,11 +1,14 @@
 # include what you want
-
-export PATH=$PATH:$HOME/bin
-
 # add this to the .bashrc: . $HOME/.bashrc.load
+
+export PATH=$PATH:$HOME/bin:$HOME/bin/git-annex.linux
+export EDITOR=vim
 
 ####
 # put any bash customizations in here
- .  /usr/share/autojump/autojump.sh
+ .  /etc/profile.d/autojump.bash
  . .bashprompt
  eval "$(dircolors ~/.dir_colors)"
+
+alias ll='ls -alF'
+alias la='ls -A'
