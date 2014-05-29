@@ -11,12 +11,23 @@ fi
 # set pointer
 xsetroot -cursor_name left_ptr
 
-sh ~/.fehbg &
-xscreensaver &
+xset b off
+
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
-exec ck-launch-session dbus-launch xmonad
+export PATH=$PATH:$HOME/bin
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+sh ~/.fehbg &
+xscreensaver &
+nm-applet --sm-disable &
+ibus-daemon --xim -d &
+
+exec xmonad
