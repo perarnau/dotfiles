@@ -1,0 +1,3 @@
+#!/bin/sh
+TZ="US/Pacific" date +%H:%M
+
