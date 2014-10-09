@@ -21,16 +21,23 @@ folder-hook Gmail set postponed=~/Maildir/Gmail/Drafts
 folder-hook Gmail set record=~/Maildir/Gmail/Sent
 folder-hook Gmail set signature=~/.signature.gmail
 
+folder-hook Gmail/ANL set from="perarnau@mcs.anl.gov"
+
+folder-hook Argonne set from="sperarnau@anl.gov"
+folder-hook Argonne set postponed=~/Maildir/Argonne/Drafts
+folder-hook Argonne set record='~/Maildir/Argonne/Sent\ Items'
+folder-hook Argonne set signature=~/.signature.argonne
+
 set copy=yes
 set fcc_attach=yes
 set sort=threads
 set sort_aux = 'last-date-received'
 
-set spoolfile="~/Maildir/Riken/INBOX"
+set spoolfile="~/Maildir/Argonne/INBOX"
 set header_cache=~/.mutt/.hcache/
 
 set check_new=yes
-set mail_check=60
+set mail_check=5
 
 set editor=vim
 set edit_headers=yes
