@@ -6,8 +6,7 @@ Config {
        , lowerOnStart = True
        , commands = [ Run Battery ["-t","<acstatus>:<left>%(<timeleft>)"] 60 
 		    , Run DiskIO [("/", "R:<read> W:<write>")] [] 5
-                    , Run Network "enp0s25" ["-t","<dev>:<rx>","-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Network "wlp3s0" ["-t","<dev>:<rx>","-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run DynNetwork ["-t","<dev>:<rx>","-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem:<usedratio>%"] 10
     		    , Run Com "kanjioftheday" [] "kanji" 60
@@ -19,5 +18,5 @@ Config {
        , sepChar = "%"
        , alignSep = "}{"
        , template =
-       "%StdinReader%}{%diskio%|%cpu%|%memory%|%eno1%|%wlp3s0%|%battery%|<fc=#ee9a00>SF:%sfdate%</fc>|<fc=#ee9a00>FR:%parisdate%</fc>|%kanji%|<fc=#ee9a00>%date%</fc>"
+       "%StdinReader%}{%diskio%|%cpu%|%memory%|%dynnetwork%|%battery%|<fc=#ee9a00>SF:%sfdate%</fc>|<fc=#ee9a00>FR:%parisdate%</fc>|%kanji%|<fc=#ee9a00>%date%</fc>"
        }
