@@ -21,8 +21,6 @@ folder-hook Gmail set postponed=~/Maildir/Gmail/Drafts
 folder-hook Gmail set record=~/Maildir/Gmail/Sent
 folder-hook Gmail set signature=~/.signature.gmail
 
-folder-hook Gmail/ANL set from="perarnau@mcs.anl.gov"
-
 folder-hook Argonne set from="sperarnau@anl.gov"
 folder-hook Argonne set postponed=~/Maildir/Argonne/Drafts
 folder-hook Argonne set record='~/Maildir/Argonne/Sent\ Items'
@@ -68,7 +66,7 @@ set write_inc=1000
 set beep_new=yes
 
 # abook
-set query_command = "abook --mutt-query '%s'"
+set query_command = "lbdbq %s 2>/dev/null"
 macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
 macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
 
