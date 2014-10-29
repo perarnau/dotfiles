@@ -21,7 +21,7 @@ folder-hook Gmail set postponed=~/Maildir/Gmail/Drafts
 folder-hook Gmail set record=~/Maildir/Gmail/Sent
 folder-hook Gmail set signature=~/.signature.gmail
 
-folder-hook Argonne set from="sperarnau@anl.gov"
+folder-hook Argonne set from="swann@anl.gov"
 folder-hook Argonne set postponed=~/Maildir/Argonne/Drafts
 folder-hook Argonne set record='~/Maildir/Argonne/Sent\ Items'
 folder-hook Argonne set signature=~/.signature.argonne
@@ -55,6 +55,7 @@ set charset="utf-8"
 set send_charset="utf-8"
 
 set folder_format="%N %-25f %d"
+set attach_format="%u%D%I %t%4n %T%d%> [%.7m/%.10M, %.6e%?C?, %C?, %s]"
 
 set rfc2047_parameters=yes
 
@@ -75,6 +76,7 @@ macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender ad
 macro index <F8> "<shell-escape>rm -rf ~/.mu/results; mu find -o links --linksdir ~/.mu/results " "mu-find"
 macro index <F9> "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
 
-# top-post style
+# default top-post style
+set sig_on_top
 macro index ,t ":set sig_on_top;<Return>" "set top-post reply"
 macro index ,b ":unset sig_on_top;<Return>" "set bottom-post reply"
