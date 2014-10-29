@@ -1,0 +1,5 @@
+geometry 2x1+1800+1062
+grow_gravity W
+icon_size 18
+transparent true
+dockapp_mode simple
