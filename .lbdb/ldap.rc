@@ -44,8 +44,8 @@ $ldap_result_email = '${mail}';
 $ldap_result_realname = '${cn}';
 # format of the comment result based on the expected answers of the ldap query
 $ldap_result_comment = '';
-# Don't use wildchars on searching
-$ignorant = 0;
+# Use wildchars on searching
+$ignorant = 1;
 # Do an anonymous bind to the LDAP server:
 $ldap_bind_dn = "uid=${login},dc=anl,dc=gov";
 $ldap_bind_password = $password;
