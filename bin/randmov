@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# play file $1, with random start on window id $2
+file=$1
+wid=$2
+
+# read a random uint16
+r=`od -vAn -N2 -tu2 < /dev/urandom`
+# convert it to percentage
+p=`echo "scale=1; $r/65535 *100" | bc -l`
+# start movie
+mpv --start="$p%" --really-quiet --no-audio --fs --loop=inf \
+	--no-stop-screensaver --wid=$wid $file &
+PID="$!"
+
+trap "kill $PID" exit INT TERM
+wait
