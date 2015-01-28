@@ -1,0 +1,2 @@
+#!/bin/sh
+urxvt -T cal -e calcurse

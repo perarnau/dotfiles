@@ -6,7 +6,7 @@ xsetroot -cursor_name left_ptr
 xset b off
 
 # xrandr config at Argonne
-SECOND_SCREEN=`xrandr | awk '/^DP. connected/ { print $1 }'`
+SECOND_SCREEN=`xrandr | awk '/^DP.* connected/ { print $1 }'`
 if [[ "$SECOND_SCREEN" != "" ]]; then
 	xrandr --output $SECOND_SCREEN --right-of eDP1
 fi
@@ -28,5 +28,6 @@ ibus-daemon --xim -d &
 syndaemon -i 1 -d &
 gnome-keyring-daemon &
 start-pulseaudio-x11 &
-godark
+dunst &
+golight
 exec xmonad

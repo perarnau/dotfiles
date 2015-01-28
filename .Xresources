@@ -1,7 +1,7 @@
 !!xterm config
 xterm*utf8: 1
 xterm*faceName: DejaVu Sans Mono
-xterm*faceSize: 9
+xterm*faceSize: 10
 
 !!urxvt config
 URxvt.font: xft:DejaVu Sans Mono:size=10:antialias=True, xft:WenQuanYi Micro Hei:size=10:antialias=True

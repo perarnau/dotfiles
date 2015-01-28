@@ -15,5 +15,6 @@ shopt -s histappend
  . .bashprompt
  eval "$(dircolors ~/.dir_colors)"
 
+alias emacs='TERM=xterm-16color emacs -nw'
 alias ll='ls -alF'
 alias la='ls -A'

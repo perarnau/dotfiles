@@ -7,14 +7,15 @@
 (setq make-backup-files nil)
 
 ;; Go back to the dark side of the force
-(add-to-list 'load-path "~/.emacs.d/evil")  
-(require 'evil)  
+(add-to-list 'load-path "~/.emacs.d/undo-tree")
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
 (evil-mode 1)
 
 ;; Remove all that terrible clutter
-(menu-bar-mode -1) 
-(toggle-scroll-bar -1) 
-(tool-bar-mode -1) 
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
 
 ;; Enable transient mark mode
 (transient-mark-mode 1)
@@ -24,21 +25,25 @@
 (setq-default fill-column 80)
 
 ;; Color theme
-(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized-master")
-(require 'color-theme)
-(color-theme-initialize)
-(require 'color-theme-solarized)
-(color-theme-solarized-dark)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
+(load-theme 'solarized-dark t)
+(setq-default solarized-termcolors 256)
+
+;; c mode config
+(require 'cc-mode)
+(setq-default c-default-style "linux"
+	      c-basic-offset 4)
 
 ;; nxhtml
-(load "~/.emacs.d/nxhtml/autostart.el")
+;;(load "~/.emacs.d/nxhtml/autostart.el")
 
 ;; new plugins
-(add-to-list 'load-path "~/.emacs.d/modes")
-(require 'jinja)
+;;(add-to-list 'load-path "~/.emacs.d/modes")
+;;(require 'jinja)
 
 ;;;; org-mode configuration
 ;; Enable org-mode
+(add-to-list 'load-path "~/.emacs.d/org-mode")
 (require 'org)
 ;; Activate org-mode for files ending in .org
 ;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -66,8 +71,8 @@
 ;; A few nice options for org-mode
 (setq org-startup-indented t)
 (setq org-indent-mode t)
-(setq org-agenda-include-all-todo t)                                            
-(setq org-agenda-include-diary t) 
+(setq org-agenda-include-all-todo t)
+(setq org-agenda-include-diary t)
 
 (setq org-directory "~/org/")
 (setq org-default-notes-file "~/org/refile.org")
@@ -101,11 +106,12 @@
     (org-refile)))
 
 ;; inline images from org-babel execution
-(add-hook 'org-babel-after-execute-hook 'org-display-inline-images) 
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 (add-hook 'org-mode-hook 'org-display-inline-images)
 
 
 ;; Bind key features of org-mode
+(global-set-key "\C-c'" 'org-edit-src-code)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
