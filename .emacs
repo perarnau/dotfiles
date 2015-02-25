@@ -5,6 +5,7 @@
 
 ;; Disable the backup files
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ;; Go back to the dark side of the force
 (add-to-list 'load-path "~/.emacs.d/undo-tree")
@@ -33,6 +34,8 @@
 (require 'cc-mode)
 (setq-default c-default-style "linux"
 	      c-basic-offset 4)
+(setq font-lock-maximum-decoration t)
+
 
 ;; nxhtml
 ;;(load "~/.emacs.d/nxhtml/autostart.el")
