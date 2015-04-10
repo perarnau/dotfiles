@@ -12,7 +12,7 @@ shopt -s histappend
 ####
 # put any bash customizations in here
  .  /etc/profile.d/autojump.bash
- . .bashprompt
+ . $HOME/.bashprompt
  eval "$(dircolors ~/.dir_colors)"
 
 alias emacs='TERM=xterm-16color emacs -nw'
