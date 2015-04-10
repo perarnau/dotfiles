@@ -3,9 +3,8 @@
 ;; Disable the splash screen
 (setq inhibit-splash-screen t)
 
-;; Disable the backup files
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+;; Move the backup files
+(setq backup-directory-alist `(("." . "~/.saves")))
 
 ;; Go back to the dark side of the force
 (add-to-list 'load-path "~/.emacs.d/undo-tree")
@@ -27,8 +26,8 @@
 
 ;; Color theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
-(load-theme 'solarized-dark t)
-(setq-default solarized-termcolors 256)
+(load-theme 'solarized t)
+(setq-default solarized-termcolors 16)
 
 ;; c mode config
 (require 'cc-mode)
@@ -36,6 +35,9 @@
 	      c-basic-offset 4)
 (setq font-lock-maximum-decoration t)
 
+
+(setq browse-url-browser-function 'browse-url-generic
+	browse-url-generic-program "xdg-open")
 
 ;; nxhtml
 ;;(load "~/.emacs.d/nxhtml/autostart.el")
@@ -76,22 +78,26 @@
 (setq org-indent-mode t)
 (setq org-agenda-include-all-todo t)
 (setq org-agenda-include-diary t)
+(setq org-log-into-drawer t)
+(setq org-tags-match-list-sublevels 'indented)
 
 (setq org-directory "~/org/")
 (setq org-default-notes-file "~/org/refile.org")
+(setq org-agenda-files (list org-directory))
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org/liste.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
+      '(("t" "Todo" entry (file+headline "~/org/scratchbook.org" "Tasks")
+             "* TODO %?\n  %i\n")
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
-             "* %?\n%u\n%i\n%a")))
+             "* %?\n%T\n")
+	))
 
 ;;;;;; Refile targets
 ;; any headline with level <= 2 is a target
-(setq org-refile-targets '((nil :maxlevel . 2)
+(setq org-refile-targets '((nil :maxlevel . 3)
                                 ; all top-level headlines in the
                                 ; current buffer are used (first) as a
                                 ; refile target
-                           (org-agenda-files :maxlevel . 2)))
+                           (org-agenda-files :maxlevel . 3)))
 
 ;; provide refile targets as paths, including the file name
 ;; (without directory) as level 1 of the path
@@ -119,15 +125,3 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/"))))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
