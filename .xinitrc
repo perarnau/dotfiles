@@ -21,6 +21,8 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
+eval `ssh-agent`
+urxvtd -q -o -f &
 sh ~/.fehbg &
 xscreensaver &
 nm-applet --sm-disable &

@@ -39,7 +39,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "urxvt"
+myTerminal      = "urxvtc"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -84,7 +84,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1:term","2:web","3:mail","4:im","5:pdf","6:irc","7:random","8:cal","9:wine","NSP"]
+myWorkspaces    = ["1:term","2:web","3:mail","4:im","5:pdf","6:org","7:random","8:cal","9:wine","NSP"]
 
 myFont = "-dejavu-dejavu sans mono-medium-r-normal-*-10-*-*-*-*-*-*"
 -- Width of the window border in pixels.
@@ -314,7 +314,7 @@ myManageHook = ( composeAll . concat $
     , [ appName =? "web-edit"         --> doShift "2:web"]
     , [ fmap ( c `isInfixOf`) title --> doShift "3:mail" | c <- myMatchMailT ]
     , [ fmap ( c `isInfixOf`) title --> doShift "8:cal" | c <- myMatchCalT ]
-    , [ fmap ( c `isInfixOf`) title --> doShift "6:irc" | c <- myMatchIRCT ]
+    , [ fmap ( c `isInfixOf`) title --> doShift "6:org" | c <- myMatchOrgT ]
     , [ fmap ( c `isInfixOf`) className --> doShift "1:term" | c <- myMatchTermC ]
     , [ fmap ( c `isInfixOf`) className --> doShift "2:web" | c <- myMatchWebC ]
     , [ fmap ( c `isInfixOf`) className --> doShift "4:im" | c <- myMatchIMC ]
@@ -330,8 +330,8 @@ myManageHook = ( composeAll . concat $
           myMatchIMT = [ "Pidgin", "pidgin" , "irssi", "viber", "Viber" ]
 	  myMatchMailT = [ "mutt" ]
 	  myMatchCalT = [ "cal" ]
-	  myMatchIRCT = [ "irc" ]
-	  myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura" ]
+	  myMatchOrgT = [ "org" ]
+	  myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura", "display" ]
 	  myMatchWineC = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
 
 

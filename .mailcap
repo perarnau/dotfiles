@@ -1,6 +1,8 @@
 text/html; google-chrome-stable %s ;
 text/html;                      w3m -I %{charset} -dump %s; nametemplate=%s.html; copiousoutput
 image/jpeg; xdg-open %s;
+application/pdf; zathura /dev/stdin
 application/pdf; evince /dev/stdin
 application/pdf; pdftotext -layout /dev/stdin -; copiousoutput
 application/x-ica; /home/perarnau/ICAClient/linuxx64/wfica.sh %s; x-mozilla-flags=plugin:Citrix ICA Client
+application/http; xdg-open %s;

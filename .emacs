@@ -118,7 +118,6 @@
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 (add-hook 'org-mode-hook 'org-display-inline-images)
 
-
 ;; Bind key features of org-mode
 (global-set-key "\C-c'" 'org-edit-src-code)
 (global-set-key "\C-cl" 'org-store-link)

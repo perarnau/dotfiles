@@ -30,6 +30,7 @@ set copy=yes
 set fcc_attach=yes
 set sort=threads
 set sort_aux = 'last-date-received'
+set strict_threads=yes
 
 set spoolfile="~/Maildir/Argonne/INBOX"
 set header_cache=~/.mutt/.hcache/
