@@ -42,8 +42,10 @@ set editor=vim
 set edit_headers=yes
 set include
 
+set markers=no
 set implicit_autoview=yes
 
+alternative_order text/plain text/html
 macro index \cb "<pipe-entry> urlview<Enter>"
 auto_view application/x-gunzip
 auto_view application/x-gzip

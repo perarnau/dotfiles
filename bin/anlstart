@@ -1,0 +1,9 @@
+#!/bin/sh
+godark
+myplanning &
+#sleep 1
+#golight
+mymutt &
+mycal &
+google-chrome-stable &
+spotify &

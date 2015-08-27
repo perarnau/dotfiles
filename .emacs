@@ -50,9 +50,9 @@
 ;; Enable org-mode
 (add-to-list 'load-path "~/.emacs.d/org-mode")
 (require 'org)
-;; Activate org-mode for files ending in .org
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; should be default on recent emacs
+
+; some evil bindings to make it easier
+(define-key evil-normal-state-map (kbd "TAB") 'org-cycle)
 
 ; Some initial languages we want org-babel to support
 (org-babel-do-load-languages

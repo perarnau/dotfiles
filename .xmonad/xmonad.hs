@@ -15,7 +15,7 @@
 -- http://www.haskell.org/haskellwiki/Xmonad/Notable_changes_since_0.8
 --
 
-import XMonad hiding (Tall)
+import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -282,12 +282,14 @@ myLayout = avoidStruts $
 	onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( term ||| mytab ||| Full ) $
 	term ||| Full ||| mytab
   where
+     term = XMonad.Tall  1 (3/100) (1/2)
+     hterm = Mirror term
      -- default tiling algorithm partitions the screen into two panes
-     hterm  = Mirror term
-     term   = HintedTile master delta inc TopLeft Tall
-     master = 1
-     delta  = 3/100
-     inc    = 1/2
+     -- hterm  = Mirror term
+     -- term   = HintedTile master delta inc TopLeft Tall
+     -- master = 1
+     -- delta  = 3/100
+     ---inc    = 1/2
      mytab  = tabbed shrinkText myTabTheme
 
 

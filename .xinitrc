@@ -31,5 +31,5 @@ syndaemon -i 1 -d &
 gnome-keyring-daemon &
 start-pulseaudio-x11 &
 dunst &
-golight
+godark
 exec xmonad

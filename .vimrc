@@ -83,6 +83,9 @@ set undoreload=10000
 " airline always active
 set laststatus=2
 
+" some syntastic config
+let g:syntastic_python_checkers=['pep8']
+
 " toggles
 nmap <F9> :TagbarToggle<CR>
 nmap <F10> :NERDTreeToggle<CR>

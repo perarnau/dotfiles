@@ -6,6 +6,12 @@
 [alias]
 	wdiff = diff --color-words
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+	watch = "!clear;inotifywait --quiet -mr -e modify,move,create,delete --format \"%f %e\" @/.git . | \
+		  while read file; do \
+		      clear;\
+		      git status --short;\
+		      git --no-pager diff --shortstat;\
+		  done;"
 [core]
 	editor = vim
 [push]

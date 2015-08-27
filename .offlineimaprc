@@ -27,7 +27,7 @@ accounts = Riken, Gmail, Argonne
 # since any given sync run never "finishes" due to a timer, you will never
 # sync your additional accounts if this is 1.
 
-maxsyncaccounts = 3
+maxsyncaccounts = 6
 
 # You can specify one or more user interface modules for OfflineIMAP
 # to use.  OfflineIMAP will try the first in the list, and if it
@@ -149,7 +149,7 @@ remoterepository = ImagRemote
 # frequently to do that (in minutes) here.  You can also specify
 # fractional minutes (ie, 3.25).
 
-autorefresh = 0.25
+autorefresh = 1
 
 # OfflineImap can replace a number of full updates by quick
 # synchronizations.  It only synchronizes a folder if 1) a Maildir
@@ -355,7 +355,7 @@ maxconnections = 2
 # next time and may use fewer server resources on connection, but uses
 # more server memory.  This setting has no effect if autorefresh is not set.
 
-holdconnectionopen = no
+holdconnectionopen = yes
 
 # If you want to have "keepalives" sent while waiting between syncs,
 # specify the amount of time IN SECONDS between keepalives here.  Note that
@@ -382,7 +382,7 @@ subscribedonly = no
 
 localrepository = RikenLocal
 remoterepository = RikenRemote
-autorefresh = 5
+autorefresh = 1
 quick = 10
 
 [Repository RikenLocal]
@@ -406,7 +406,7 @@ holdconnectionopen = no
 
 localrepository = ArgonneLocal
 remoterepository = ArgonneRemote
-autorefresh = 5
+autorefresh = 1
 quick = 10
 
 [Repository ArgonneLocal]
@@ -424,14 +424,14 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteport = 993
 remoteuser = sperarnau@anl.gov
 maxconnections = 2
-holdconnectionopen = no
+holdconnectionopen = yes
 
 
 [Account Gmail]
 
 localrepository = GmailLocal
 remoterepository = GmailRemote
-autorefresh = 2
+autorefresh = 1
 quick = 10
 maxage = 360
 
