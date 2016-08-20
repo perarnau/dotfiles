@@ -27,6 +27,8 @@ import XMonad.Util.Scratchpad
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Tabbed
 import XMonad.Layout.HintedTile
+import XMonad.Layout.NoBorders
+import XMonad.Layout.ThreeColumns
 import Graphics.X11.ExtraTypes
 import System.IO
 import Data.List
@@ -119,7 +121,7 @@ myTabTheme = defaultTheme {
 	}
 -- Applications
 
-myDmenuLaunch = "dmenu_run -nb black -nf white -sb gray -sf white -fn '-misc-fixed-medium-r-*-*-15-*-*-*-*-*-*-*'"
+myDmenuLaunch = "dmenu_run"
 myTray = "pgrep stalonetray || stalonetray"
 myXmobarLaunch = "xmobar"
 myScratchTerminal = "urxvt"
@@ -278,12 +280,13 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
-	onWorkspace "1:term" ( term ||| hterm ||| mytab ) $
-	onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( term ||| mytab ||| Full ) $
-	term ||| Full ||| mytab
+	onWorkspace "1:term" ( term ||| hterm ||| mytab ||| mythree) $
+	onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( term ||| mytab ||| myfull ) $
+	term ||| myfull ||| mytab
   where
      term = XMonad.Tall  1 (3/100) (1/2)
      hterm = Mirror term
+     myfull = noBorders Full
      -- default tiling algorithm partitions the screen into two panes
      -- hterm  = Mirror term
      -- term   = HintedTile master delta inc TopLeft Tall
@@ -291,6 +294,7 @@ myLayout = avoidStruts $
      -- delta  = 3/100
      ---inc    = 1/2
      mytab  = tabbed shrinkText myTabTheme
+     mythree = ThreeCol 1 (3/100) (1/3)
 
 
 ------------------------------------------------------------------------
@@ -323,10 +327,11 @@ myManageHook = ( composeAll . concat $
     , [ fmap ( c `isInfixOf`) title --> doShift "4:im" | c <- myMatchIMT ]
     , [ fmap ( c `isInfixOf`) className --> doShift "5:pdf" | c <- myMatchPDFC ]
     , [ fmap ( c `isInfixOf`) className --> doShift "9:wine" | c <- myMatchWineC ]
+    , [ fmap ( c `isInfixOf`) title --> doShift "9:wine" | c <- myMatchWineN ]
     -- make new windows slaves
     , [ doF avoidMaster ]
     ]) <+> manageDocks <+> myManageScratchPad
-    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome", "Chromium" ]
+    where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome", "Chromium", "google-chrome"]
           myMatchTermC = [ "Terminator", "terminator", "urxvt", "URxvt", "xterm", "gnome-terminal" ]
           myMatchIMC = [ "Pidgin", "pidgin" , "irssi" ]
           myMatchIMT = [ "Pidgin", "pidgin" , "irssi", "viber", "Viber" ]
@@ -335,6 +340,7 @@ myManageHook = ( composeAll . concat $
 	  myMatchOrgT = [ "org" ]
 	  myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura", "display" ]
 	  myMatchWineC = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
+	  myMatchWineN = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
 
 
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd

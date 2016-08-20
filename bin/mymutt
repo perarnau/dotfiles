@@ -1,3 +1,2 @@
 #!/bin/sh
-pgrep offlineimap || offlineimap -l .offlineimap/log &
 urxvt -T mutt -e mutt

@@ -4,10 +4,15 @@
 export PATH=$PATH:$HOME/.cabal/bin:$HOME/bin:$HOME/bin/git-annex.linux
 export EDITOR=vim
 export PROMPT_DIRTRIM=3
-export HISTCONTROL=ignoreboth
-export HISTSIZE=10000
-export HISTFILESIZE=1000000
-shopt -s histappend
+export HISTCONTROL=ignoreboth:erasedups
+export HOSTNAME_SHORT=$(hostname --short)
+export HISTFILE="${HOME}/.history/$(date -u +%Y/%m/%d.%H.%M.%S)_${HOSTNAME_SHORT}_$$"
+mkdir -p "${HOME}/.history/$(date -u +%Y/%m/)"
+
+histgrep()
+{
+	grep -r "$@" ~/.history
+}
 
 ####
 # put any bash customizations in here
@@ -15,7 +20,11 @@ shopt -s histappend
 . $HOME/.bashprompt
 eval "$(dircolors ~/.dir_colors)"
 export GCC_COLORS="error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01"
+export MAKEFLAGS="-j 2"
+export LESS="-RMi"
 
+alias h='histgrep'
 alias emacs='TERM=xterm-16color emacs -nw'
 alias ll='ls -alF'
 alias la='ls -A'
+eval "$(thefuck --alias)"

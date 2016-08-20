@@ -16,3 +16,7 @@
 	editor = vim
 [push]
 	default = simple
+[diff]
+	algorithm = patience
+[commit]
+	template = /home/perarnau/.git-commit-template.txt

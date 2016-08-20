@@ -15,7 +15,7 @@ metadata = ~/.offlineimap
 # not use "general" for an account name.
 #
 
-accounts = Riken, Gmail, Argonne
+accounts = Gmail, Argonne
 
 # Offlineimap can synchronize more the one account at a time.  If you
 # want to enable this feature, set the below value to something
@@ -425,14 +425,13 @@ remoteport = 993
 remoteuser = sperarnau@anl.gov
 maxconnections = 2
 holdconnectionopen = yes
-
+folderfilter = lambda folder: folder not in ['Calendar','Deleted Items', 'Contacts', 'Journal', 'Notes', 'Tasks']
 
 [Account Gmail]
 
 localrepository = GmailLocal
 remoterepository = GmailRemote
 autorefresh = 1
-quick = 10
 maxage = 360
 
 [Repository GmailLocal]

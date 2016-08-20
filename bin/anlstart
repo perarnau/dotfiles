@@ -7,3 +7,6 @@ mymutt &
 mycal &
 google-chrome-stable &
 spotify &
+udisksctl mount -b /dev/sdb1
+anlscreens
+sh ~/.fehbg

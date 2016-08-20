@@ -54,6 +54,9 @@ endif
 set backspace=indent,eol,start
 set tw=79
 
+"" remove smartindent for tex files
+au BufEnter *.tex set nosmartindent
+
 if has("multi_byte")
 	if &termencoding == ""
 		let &termencoding = &encoding
@@ -84,7 +87,8 @@ set undoreload=10000
 set laststatus=2
 
 " some syntastic config
-let g:syntastic_python_checkers=['pep8']
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_c_checkers=['make']
 
 " toggles
 nmap <F9> :TagbarToggle<CR>

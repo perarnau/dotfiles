@@ -31,13 +31,13 @@ $login = $match->login();
 $password =$match->password();
 
 # hostname of your ldap server
-$ldap_server = 'ldaps://ldap.anl.gov';
+$ldap_server = 'ldaps://ldap.anl.gov:636';
 # ldap base search
 $search_base = 'dc=anl,dc=gov';
 # list of the fields that will be used for the query
-$ldap_search_fields = 'givenname sn cn mail';
+$ldap_search_fields = 'givenname sn cn gn mail';
 # list of the fields that will be used for composing the answer
-$ldap_expected_answers = 'givenname sn cn mail';
+$ldap_expected_answers = 'givenname sn gn cn mail';
 # format of the email result based on the expected answers of the ldap query
 $ldap_result_email = '${mail}';
 # format of the realname result based on the expected answers of the ldap query
