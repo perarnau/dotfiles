@@ -78,7 +78,7 @@ pythonfile = ~/.mutt/nametrans.py
 #
 # The default is to have no timeout beyond the OS.  Times are given in seconds.
 #
-# socktimeout = 60
+socktimeout = 60
 
 # By default, OfflineIMAP will use fsync() to force data out to disk at
 # opportune times to ensure consistency.  This can, however, reduce
@@ -417,15 +417,17 @@ restoreatime = no
 
 [Repository ArgonneRemote]
 
+auth_mechanisms = GSSAPI, CRAM-MD5, LOGIN
 type = IMAP
-remotehost = mail.anl.gov
+remotehost = outlook.office365.com
 ssl = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteport = 993
 remoteuser = sperarnau@anl.gov
 maxconnections = 2
-holdconnectionopen = yes
-folderfilter = lambda folder: folder not in ['Calendar','Deleted Items', 'Contacts', 'Journal', 'Notes', 'Tasks']
+holdconnectionopen = no
+#folderfilter = lambda folder: folder not in ['Calendar','Deleted Items', 'Contacts', 'Journal', 'Notes', 'Tasks']
+folderfilter = lambda folder: folder not in [ 'Calendar', 'Calendar/Birthdays', 'Calendar/Sub Folder 1', 'Calendar/Sub Folder 2', 'Calendar/United States holidays', 'Contacts', 'Contacts/Sub Folder 1', 'Contacts/Sub Folder 2', 'Contacts/Skype for Business Contacts', 'Deleted Items', 'Drafts',  'Journal', 'Junk E-Mail', 'Notes', 'Outbox', 'Sync Issues', 'Sync Issues/Conflicts', 'Sync Issues/Local Failures', 'Sync Issues/Server Failures', 'Tasks', 'Tasks/Sub Folder 1', 'Tasks/Sub Folder 2', 'Conversation History', 'Deleted Items/Sent', 'Sent']
 
 [Account Gmail]
 

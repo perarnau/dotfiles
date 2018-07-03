@@ -1,6 +1,8 @@
 text/html; google-chrome-stable %s ;
 text/html; w3m -I %{charset} -dump %s; nametemplate=%s.html; copiousoutput
 #text/html; elinks -dump %s; nametemplate=%s.html; copiousoutput
+text/calendar; mutt-ics; copiousoutput
+application/ics; mutt-ics; copiousoutput
 image/jpeg; xdg-open %s;
 application/pdf; zathura /dev/stdin
 application/pdf; evince /dev/stdin

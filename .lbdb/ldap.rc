@@ -41,7 +41,7 @@ $ldap_expected_answers = 'givenname sn gn cn mail';
 # format of the email result based on the expected answers of the ldap query
 $ldap_result_email = '${mail}';
 # format of the realname result based on the expected answers of the ldap query
-$ldap_result_realname = '${cn}';
+$ldap_result_realname = '${givenname} ${sn}';
 # format of the comment result based on the expected answers of the ldap query
 $ldap_result_comment = '';
 # Use wildchars on searching

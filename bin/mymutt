@@ -1,2 +1,3 @@
 #!/bin/sh
-urxvt -T mutt -e mutt
+# move to tmp for default attachment save folder
+urxvt -T mutt -cd /tmp -e mutt

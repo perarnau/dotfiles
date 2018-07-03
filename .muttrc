@@ -45,11 +45,23 @@ set include
 set markers=no
 set implicit_autoview=yes
 
-alternative_order text/plain text/html
-macro index \cb "<pipe-entry> urlview<Enter>"
+alternative_order text/calendar text/plain text/html
+
+# proper urlview macro
+#macro index \cb "\
+#:set my_tmp_pipe_decode=\$pipe_decode\n\
+#:set pipe_decode\n\
+#|urlview\n\
+#:set pipe_decode=\$my_tmp_pipe_decode\n\
+#:unset my_tmp_pipe_decode\n" \
+#'call urlview to extract URLs out of a message'
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
 auto_view application/x-gunzip
 auto_view application/x-gzip
 auto_view text/html
+auto_view text/calendar application/ics
 
 set envelope_from=yes
 set sendmail="/usr/bin/msmtp"
@@ -64,9 +76,12 @@ set rfc2047_parameters=yes
 
 set mime_forward=ask-yes
 
+# format flowed
+set text_flowed
+
 # perf
-set read_inc=1000
-set write_inc=1000
+set read_inc=5000
+set write_inc=5000
 
 # for urgency hint in mutt terminal
 set beep_new=yes
