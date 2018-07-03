@@ -57,6 +57,9 @@ set tw=79
 "" remove smartindent for tex files
 au BufEnter *.tex set nosmartindent
 
+"" mutt specific
+au BufRead /tmp/mutt-* set tw=72
+
 if has("multi_byte")
 	if &termencoding == ""
 		let &termencoding = &encoding
@@ -89,6 +92,7 @@ set laststatus=2
 " some syntastic config
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_c_checkers=['make']
+let g:syntastic_rust_checkers=['rustc']
 
 " toggles
 nmap <F9> :TagbarToggle<CR>

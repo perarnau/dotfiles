@@ -3,9 +3,11 @@ godark
 myplanning &
 #sleep 1
 #golight
+myofflineimap &
 mymutt &
 mycal &
-google-chrome-stable &
+#google-chrome-stable &
+firefox &
 spotify &
 udisksctl mount -b /dev/sdb1
 anlscreens

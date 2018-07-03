@@ -1,0 +1,5 @@
+#!/bin/sh
+while true; do
+	offlineimap -o -l /home/perarnau/.offlineimap/log
+	sleep 60
+done

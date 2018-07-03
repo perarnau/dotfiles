@@ -1,2 +1,2 @@
 #!/bin/sh
-urxvt -T org -e emacs -nw ~/org/scratchbook.org
+urxvt -T org -e emacs -nw ~/org/trips.org

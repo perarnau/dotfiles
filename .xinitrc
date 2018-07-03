@@ -2,8 +2,11 @@
 
 # X11 config
 xrdb -merge $HOME/.Xresources
+xrdb -merge ~/.Xresources.dark
 xsetroot -cursor_name left_ptr
 xset b off
+# disable printscreen
+xmodmap -e 'keycode 107='
 
 # xrandr config at Argonne
 SECOND_SCREEN=`xrandr | awk '/^DP.* connected/ { print $1 }'`
@@ -20,6 +23,7 @@ export PATH=$PATH:$HOME/bin
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+export CUPS_SERVER=localhost:631
 
 eval `ssh-agent`
 urxvtd -q -o -f &
@@ -31,5 +35,5 @@ syndaemon -i 1 -d &
 gnome-keyring-daemon &
 start-pulseaudio-x11 &
 dunst &
-godark
+redshift &
 exec xmonad
