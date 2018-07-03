@@ -1,0 +1,29 @@
+#!/usr/bin/env python2
+
+# Cleanup bibtex files by removing unwanted fields
+
+import bibtexparser
+import sys
+
+infile = sys.argv[1]
+tokeep = ['author', 'journal', 'year', 'booktitle', 'howpublished', 'url',
+        'title', 'ENTRYTYPE', 'ID']
+
+
+with open(infile) as bibtexfile:
+    bib_database = bibtexparser.load(bibtexfile)
+
+outdb = []
+for entry in bib_database.entries:
+    oute = {}
+    for field in tokeep:
+        if field in entry:
+            oute[field] = entry[field]
+    outdb.append(oute)
+
+bib = bibtexparser.bibdatabase.BibDatabase()
+bib.entries = outdb
+writer = bibtexparser.bwriter.BibTexWriter()
+writer.indent = '    '
+writer.comma_first = False
+sys.stdout.write(writer.write(bib))
