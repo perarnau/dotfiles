@@ -11,9 +11,13 @@
 		      clear;\
 		      git status --short;\
 		      git --no-pager diff --shortstat;\
-		  done;"
+		done;"
+	merged = "!git branch --merged | grep -v master"
+	clean-merged = "!git merged | xargs git branch -d"
+	clean-all-branchs = "!git clean-merged && git remote prune origin"
 [core]
 	editor = vim
+	pager = less -FXMi
 [push]
 	default = simple
 [diff]
