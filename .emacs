@@ -1,6 +1,13 @@
 ;; -*- mode: elisp -*-
 
 ;; Disable the splash screen
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (setq inhibit-splash-screen t)
 
 ;; Move the backup files
@@ -58,7 +65,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-   (sh . t)
+   (shell . t)
    (python . t)
    (R . t)
    (ruby . t)
@@ -85,10 +92,7 @@
 (setq org-default-notes-file "~/org/refile.org")
 (setq org-agenda-files (list org-directory))
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org/scratchbook.org" "Tasks")
-             "* TODO %?\n  %i\n")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-             "* %?\n%T\n")
+      '(("c" "Conference" entry (file+datetree+prompt "~/org/trips.org") (file "~/org/templates/workflow-conference.org"))
 	))
 
 ;;;;;; Refile targets
