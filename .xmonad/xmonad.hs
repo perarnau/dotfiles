@@ -21,6 +21,8 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
 import XMonad.Util.Run
 import XMonad.Util.EZConfig
 import XMonad.Util.Scratchpad
@@ -107,18 +109,18 @@ myUrgentTextColor = "#000000"
 myUrgentBGColor = "#ff0000"
 
 -- tabbed layout theme
-myTabTheme = defaultTheme {
-	activeColor = myNormalBGColor
-	, inactiveColor = myNormalBGColor
-	, urgentColor = myUrgentBGColor
-	, activeBorderColor = myNormalFGColor
-	, inactiveBorderColor = myNormalFGColor
-	, urgentBorderColor = myUrgentTextColor
-	, activeTextColor = myActiveTextColor
-	, inactiveTextColor = myNormalFGColor
-	, urgentTextColor = myUrgentTextColor
-	, fontName = myFont
-	}
+myTabTheme = def {
+    activeColor = myNormalBGColor
+    , inactiveColor = myNormalBGColor
+    , urgentColor = myUrgentBGColor
+    , activeBorderColor = myNormalFGColor
+    , inactiveBorderColor = myNormalFGColor
+    , urgentBorderColor = myUrgentTextColor
+    , activeTextColor = myActiveTextColor
+    , inactiveTextColor = myNormalFGColor
+    , urgentTextColor = myUrgentTextColor
+    , fontName = myFont
+    }
 -- Applications
 
 myDmenuLaunch = "dmenu_run"
@@ -279,10 +281,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts $
-	onWorkspace "1:term" ( term ||| hterm ||| mytab ||| mythree) $
-	onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( term ||| mytab ||| myfull ) $
-	term ||| myfull ||| mytab
+myLayout = onWorkspace "1:term" ( term ||| hterm ||| mytab ||| mythree) $
+    onWorkspaces [ "2:web", "5:pdf", "4:im" ] ( term ||| mytab ||| myfull ) $
+    term ||| myfull ||| mytab
   where
      term = XMonad.Tall  1 (3/100) (1/2)
      hterm = Mirror term
@@ -330,17 +331,17 @@ myManageHook = ( composeAll . concat $
     , [ fmap ( c `isInfixOf`) title --> doShift "9:wine" | c <- myMatchWineN ]
     -- make new windows slaves
     , [ doF avoidMaster ]
-    ]) <+> manageDocks <+> myManageScratchPad
+    ]) <+> myManageScratchPad
     where myMatchWebC = [ "Uzbl", "uzbl", "firefox", "Firefox", "Navigator", "web" , "luakit", "jumanji", "Google-chrome", "Chromium", "google-chrome"]
           myMatchTermC = [ "Terminator", "terminator", "urxvt", "URxvt", "xterm", "gnome-terminal" ]
           myMatchIMC = [ "Pidgin", "pidgin" , "irssi" ]
-          myMatchIMT = [ "Pidgin", "pidgin" , "irssi", "viber", "Viber" ]
-	  myMatchMailT = [ "mutt" ]
-	  myMatchCalT = [ "cal" ]
-	  myMatchOrgT = [ "org" ]
-	  myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura", "display" ]
-	  myMatchWineC = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
-	  myMatchWineN = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
+          myMatchIMT = [ "Pidgin", "pidgin" , "irssi", "viber", "Viber", "skype", "Skype" ]
+          myMatchMailT = [ "mutt" ]
+          myMatchCalT = [ "cal" ]
+          myMatchOrgT = [ "org" ]
+          myMatchPDFC = [ "evince", "Evince", "acrobat", "xpdf", "Xpdf", "Zathura", "zathura", "display" ]
+          myMatchWineC = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
+          myMatchWineN = ["wine", "Wine", "explorer.exe", "spotify.exe", "winecfg.exe", "spotify", "Spotify" ]
 
 
 avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
@@ -377,20 +378,20 @@ myEventHook = mempty <+> docksEventHook
 --
 wstitle :: String -> String
 wstitle x = case x of
-			"Mirror Tall"		-> "[-]"
-			"Tall" 			-> "[|]"
-			"Tabbed Simplest"   	-> "^^^"
-		 	_			-> pad x
+            "Mirror Tall" -> "[-]"
+            "Tall"        -> "[|]"
+            "Tabbed Simplest" -> "^^^"
+            _ -> pad x
 
 
 noScratchPad ws = if ws == "NSP" then "" else ws
 
 myXmobarPP h = xmobarPP {
-	ppOutput	= hPutStrLn h
-	, ppTitle	= shorten 30
-	, ppLayout	= xmobarColor "white" "black" . wstitle
-	, ppUrgent	= xmobarColor "red" "black"
-	, ppHidden	= noScratchPad
+    ppOutput    = hPutStrLn h
+    , ppTitle    = shorten 30
+    , ppLayout    = xmobarColor "white" "black" . wstitle
+    , ppUrgent    = xmobarColor "red" "black"
+    , ppHidden    = noScratchPad
 }
 
 myLogHook h = dynamicLogWithPP $ myXmobarPP h
@@ -410,7 +411,8 @@ myLogHook h = dynamicLogWithPP $ myXmobarPP h
 -- hook by combining it with ewmhDesktopsStartup.
 --
 myStartupHook = do
-	spawn myTray
+    setWMName "LG3D"
+    spawn myTray
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -418,8 +420,8 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-	myXmobarProc <- spawnPipe myXmobarLaunch
-	xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig {
+    myXmobarProc <- spawnPipe myXmobarLaunch
+    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -436,8 +438,8 @@ main = do
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        layoutHook         = avoidStruts $ myLayout,
+        manageHook         = manageDocks <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook $ myXmobarProc,
         startupHook        = myStartupHook
