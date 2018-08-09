@@ -1,0 +1,2 @@
+#!/bin/sh
+urxvt -fn "xft:DejaVu Sans Mono:size=14:antialias=True, xft:WenQuanYi Micro Hei:size=14:antialias=True"

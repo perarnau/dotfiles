@@ -1,0 +1,26 @@
+#!/bin/sh
+REPOSITORY="/run/media/perarnau/My Passport/sakura.backup.attic"
+
+if [ ! -d "$REPOSITORY" ];
+then
+	echo "$REPOSITORY not found, exiting"
+	exit 1
+fi
+
+# Backup home, excluding some of the garbage
+attic create --stats				\
+	"$REPOSITORY"::sakura-`date +%Y-%m-%d`	\
+	/home/perarnau				\
+	--exclude /home/perarnau/Downloads	\
+	--exclude /home/perarnau/.cabal		\
+	--exclude /home/perarnau/.config	\
+	--exclude /home/perarnau/electric-movie	\
+	--exclude /home/perarnau/.vagrant.d	\
+	--exclude "/home/perarnau/VirtualBox VMs" \
+	--exclude /home/perarnau/.wine		\
+	--exclude /home/perarnau/.uchicago.backup	\
+	--exclude /home/perarnau/.cache	
+
+# prune backups, to maintain just some of the daily, weekly and monthly
+# archives
+attic prune -v "$REPOSITORY" --keep-daily=7 --keep-weekly=4 --keep-monthly=12 --keep-yearly=-1
