@@ -26,4 +26,5 @@ bib.entries = outdb
 writer = bibtexparser.bwriter.BibTexWriter()
 writer.indent = '    '
 writer.comma_first = False
-sys.stdout.write(writer.write(bib))
+output = writer.write(bib)
+sys.stdout.write(output.encode('utf8'))
