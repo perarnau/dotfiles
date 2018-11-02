@@ -123,7 +123,7 @@ myTabTheme = def {
     }
 -- Applications
 
-myDmenuLaunch = "dmenu_run"
+myDmenuLaunch = "rofi -show run"
 myTray = "pgrep stalonetray || stalonetray"
 myXmobarLaunch = "xmobar"
 myScratchTerminal = "urxvt"

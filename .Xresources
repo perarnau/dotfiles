@@ -9,3 +9,10 @@ URxvt.scrollBar: False
 URxvt*urgentOnBell: true
 URxvt*buffered: false
 URxvt.print-pipe: "cat > /dev/null"
+
+!! rofi config
+rofi.theme: /usr/share/rofi/themes/solarized_alternate.rasi
+rofi.location: 1
+rofi.lines: 5
+rofi.width: 100
+rofi.font: DejaVu Sans Mono 10
