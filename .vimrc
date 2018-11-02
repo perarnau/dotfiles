@@ -59,6 +59,7 @@ au BufEnter *.tex set nosmartindent
 
 "" mutt specific
 au BufRead /tmp/mutt-* set tw=72
+au BufRead /tmp/mutt-* set fo=wq
 
 if has("multi_byte")
 	if &termencoding == ""

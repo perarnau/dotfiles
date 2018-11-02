@@ -55,6 +55,7 @@ alternative_order text/calendar text/plain text/html
 #:set pipe_decode=\$my_tmp_pipe_decode\n\
 #:unset my_tmp_pipe_decode\n" \
 #'call urlview to extract URLs out of a message'
+set pipe_decode
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 

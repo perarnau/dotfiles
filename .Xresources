@@ -8,3 +8,4 @@ URxvt.font: xft:DejaVu Sans Mono:size=10:antialias=True, xft:WenQuanYi Micro Hei
 URxvt.scrollBar: False
 URxvt*urgentOnBell: true
 URxvt*buffered: false
+URxvt.print-pipe: "cat > /dev/null"
