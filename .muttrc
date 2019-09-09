@@ -26,7 +26,7 @@ folder-hook Argonne set postponed=~/Maildir/Argonne/Drafts
 folder-hook Argonne set record='~/Maildir/Argonne/Sent\ Items'
 folder-hook Argonne set signature=~/.signature.argonne
 
-set copy=yes
+set copy=no
 set fcc_attach=yes
 set sort=threads
 set sort_aux = 'last-date-received'
@@ -78,7 +78,8 @@ set rfc2047_parameters=yes
 set mime_forward=ask-yes
 
 # format flowed
-set text_flowed
+set text_flowed=yes
+set reflow_text
 
 # perf
 set read_inc=5000

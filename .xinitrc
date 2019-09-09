@@ -6,7 +6,7 @@ xrdb -merge ~/.Xresources.dark
 xsetroot -cursor_name left_ptr
 xset b off
 # disable printscreen
-xmodmap -e 'keycode 107='
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # xrandr config at Argonne
 SECOND_SCREEN=`xrandr | awk '/^DP.* connected/ { print $1 }'`
